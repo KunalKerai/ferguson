@@ -1,0 +1,49 @@
+
+ferg <- read.csv("Ferguson.csv")
+install.packages("vcd")
+install.packages(("lattice"))
+plot(ferg$Sex,ferg$Race, xlab="Gender", ylab="Race", main= "Distribution of Gender and Race")
+
+
+(ferg$Value~ferg$Sex+ferg$Race)
+
+    
+hist(ferg$Age, breaks=5)
+
+mytable<- (Value~)
+ftable(mytable)
+summary(mytable)
+assoc(mytable)
+mosaic(mytable, ylab="Sex", xlab="Age")
+plot(mytable)
+?mosaic
+mytable2<- (ferg$Value~ferg$Race)
+
+binom.test(mytable2)
+
+chisq.test(ferg$Disagree,ferg$Sex)
+anova(ferg$Disagree,ferg$Race,ferg$Sex)
+
+fit<-aov(ferg$Value~ferg$Race)
+summary(fit)
+TukeyHSD(fit)
+plotmeans(ferg$Value~ferg$Race+ferg$Sex)
+
+interaction.plot(ferg$Value~ferg$Sex)
+
+attach(ferg)
+race<-factor(Race)
+sex<-factor(Sex)
+interaction.plot(race,sex,Value)
+plotmeans(Value~race)
+
+
+TukeyHSD(fit)
+plotmeans(ferg$Value~ferg$Race)
+mod<-lm(ferg$Value~ferg$Race)
+summary(mod)
+
+install.packages("rgl")
+gplot<-summary(glm(Disagree~scale(Age)*Race, data=ferg, family=binomial))
+gplot
+scatter3d(Value~Sex+Race)
